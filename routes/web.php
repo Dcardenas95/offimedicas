@@ -23,3 +23,4 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/turno', TurnoController::class);
+Route::get('/preferencial', [TurnoController::class , 'preferencial'])->name('preferencial.index');

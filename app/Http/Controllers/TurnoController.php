@@ -15,9 +15,17 @@ class TurnoController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('atencion','desc')->get();
-        return view('turno.index',compact('users'));
+        $users = User::where('atencion','=','GENERAL')
+                        ->orderBy('id', 'desc')->get();;
+        return view('general.index',compact('users'));
     }
+
+    public function preferencial(){
+        $users = User::where('atencion','=','PREFERENCIAL')
+                        ->orderBy('id', 'desc')->get();
+        return view('preferencial.index',compact('users'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,8 +46,12 @@ class TurnoController extends Controller
     public function store(TurnoRequest $request)
     {
 
-        User::create($request->validated());
-        return redirect()->route('turno.index');
+        $user = User::create($request->validated());
+        if($user->atencion === 'GENERAL'){
+            return redirect()->route('turno.index');
+        }else{
+            return redirect()->route('preferencial.index');
+        }
     }
 
 

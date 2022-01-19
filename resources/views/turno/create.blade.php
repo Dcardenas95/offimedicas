@@ -18,7 +18,7 @@
                             </ul>
                         </div>
                         @endif
-                        <form method="POST" action="{{ route('turno.store') }}">
+                        <form method="POST" id="form" action="{{ route('turno.store') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -31,11 +31,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="edad">Edad:</label>
-                                <input name="edad" type="number"  value="{{ old('edad') }}" class="form-control">
+                                <input name="edad" type="number"  id="edad"   value="{{ old('edad') }}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Escoge el Modulo:</label>
-                                <select name="atencion" class="form-control select2">
+                                <select  name="atencion" id="atencion" class="form-control select2">
                                     <option value=""></option>
                                     @foreach (App\Models\User::atencion as $at)
                                         <option value="{{ $at }}"
@@ -43,9 +43,8 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <button class="btn btn-primary btn-block mt-1" id="enviar">Pedir Turno</button>
 
-
-                            <button class="btn btn-primary btn-block mt-1">Pedir Turno</button>
                         </form>
                     </div>
                 </div>
@@ -53,4 +52,14 @@
         </div>
     </div>
 </div>
+<script>
+$( document ).ready(function() {
+    $( "#edad" ).blur(function() {
+        let edad = $("#edad").val()
+        if(edad>62){
+            $("#atencion option[value='PREFERENCIAL']").attr("selected", true ,"disabled");
+        }
+    });
+});
+</script>
 @endsection
